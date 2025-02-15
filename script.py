@@ -2,6 +2,7 @@ from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
 import fpdf
 import uvicorn
+python-multipart
 
 app = FastAPI()
 
