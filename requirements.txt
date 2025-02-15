@@ -2,7 +2,5 @@ fastapi
 uvicorn
 fpdf
 requests
-sqlite3
 jinja2
 beautifulsoup4
-pysqlite3
