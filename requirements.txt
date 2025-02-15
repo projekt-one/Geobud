@@ -2,4 +2,3 @@ fastapi
 uvicorn
 fpdf
 python-multipart
-sqlite3
