@@ -1,0 +1,3 @@
+git add static/.keep
+git commit -m "Dodanie katalogu static"
+git push
