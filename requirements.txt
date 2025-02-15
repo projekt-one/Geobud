@@ -1,4 +1,7 @@
 fastapi
 uvicorn
 fpdf
-python-multipart
+requests
+sqlite3
+jinja2
+beautifulsoup4
