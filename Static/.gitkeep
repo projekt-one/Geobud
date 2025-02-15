@@ -1,0 +1,4 @@
+touch static/.gitkeep
+git add static/.gitkeep
+git commit -m "Dodanie pustego katalogu static"
+git push origin main
