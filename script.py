@@ -2,9 +2,12 @@ from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
 import fpdf
 import uvicorn
-import multipart
 
 app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"message": "Aplikacja działa!"}
 
 @app.post("/generate_pdf")
 def generate_pdf(dzialka: str = Form(...), urzad: str = Form(...)):
@@ -20,4 +23,4 @@ def generate_pdf(dzialka: str = Form(...), urzad: str = Form(...)):
     return FileResponse(filename, media_type="application/pdf", filename=filename)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=10000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
