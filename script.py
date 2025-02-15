@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Form, Query, HTTPException
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi import FastAPI, Form, Query, HTTPException, Request
+from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import fpdf
@@ -35,6 +35,11 @@ def init_db():
 @app.on_event("startup")
 def startup():
     init_db()
+
+# Strona główna
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/zapisz_projekt")
 def zapisz_projekt(nazwa: str = Form(...), lokalizacja: str = Form(...), projekt_link: str = Form(...)):
