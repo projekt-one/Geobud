@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Wniosków</title>
+</head>
+<body>
+    <h2>Generowanie Wniosku o Warunki Zabudowy</h2>
+    <form id="wniosekForm">
+        <input type="text" name="dzialka" placeholder="Adres działki" required>
+        <input type="text" name="urzad" placeholder="Nazwa urzędu" required>
+        <button type="submit">Generuj PDF</button>
+    </form>
+
+    <script>
+        document.getElementById('wniosekForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            fetch('/generate_pdf', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                let url = window.URL.createObjectURL(blob);
+                window.location.assign(url);
+            });
+        });
+    </script>
+</body>
+</html>
