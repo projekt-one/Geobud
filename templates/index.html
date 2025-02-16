@@ -15,17 +15,12 @@
             <div class="projekt">
                 <img src="/static/images/projekt1.jpg" alt="Projekt 1">
                 <p>Projekt Domu 100m²</p>
-                <button onclick="dodajProjekt('Projekt 100m²', 'Lokalizacja A', 'https://przykladowylink1.com', '/static/images/projekt1.jpg')">Wybierz</button>
+                <button onclick="dodajProjekt('Projekt 100m²', 'Lokalizacja A', 'https://przykladowylink1.com')">Wybierz</button>
             </div>
             <div class="projekt">
                 <img src="/static/images/projekt2.jpg" alt="Projekt 2">
                 <p>Projekt Domu 150m²</p>
-                <button onclick="dodajProjekt('Projekt 150m²', 'Lokalizacja B', 'https://przykladowylink2.com', '/static/images/projekt2.jpg')">Wybierz</button>
-            </div>
-            <div class="projekt">
-                <h3>Wrzuć swój projekt</h3>
-                <input type="file" id="plikProjektu">
-                <button onclick="przeslijProjekt()">Prześlij</button>
+                <button onclick="dodajProjekt('Projekt 150m²', 'Lokalizacja B', 'https://przykladowylink2.com')">Wybierz</button>
             </div>
         </div>
     </section>
@@ -33,17 +28,17 @@
     <section id="dodaj-projekt">
         <h2>Dodaj Nowy Projekt</h2>
         <form id="projekt-form">
-            <label for="nazwa">Nazwa projektu:</label>
-            <input type="text" id="nazwa" name="nazwa" required>
+            <label>Nazwa projektu:</label>
+            <input type="text" name="nazwa" required>
             
-            <label for="lokalizacja">Lokalizacja:</label>
-            <input type="text" id="lokalizacja" name="lokalizacja" required>
+            <label>Lokalizacja:</label>
+            <input type="text" name="lokalizacja" required>
 
-            <label for="projekt_link">Link do projektu:</label>
-            <input type="url" id="projekt_link" name="projekt_link" required>
+            <label>Link do projektu:</label>
+            <input type="url" name="projekt_link" required>
 
-            <label for="obrazek">Link do zdjęcia:</label>
-            <input type="url" id="obrazek" name="obrazek" required>
+            <label>Link do obrazka:</label>
+            <input type="url" name="obrazek" required>
 
             <button type="submit">Zapisz</button>
         </form>
