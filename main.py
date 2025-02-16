@@ -9,17 +9,18 @@ import uvicorn
 
 app = FastAPI()
 
-# Tworzenie katalogu na pliki statyczne, jeśli nie istnieje
+# Tworzenie katalogów na pliki statyczne i szablony
 STATIC_DIR = "static"
-if not os.path.exists(STATIC_DIR):
-    os.makedirs(STATIC_DIR)
-
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-templates = Jinja2Templates(directory="templates")
-
-# Baza danych SQLite
+TEMPLATES_DIR = "templates"
 DB_FILE = "projekty.db"
 
+os.makedirs(STATIC_DIR, exist_ok=True)
+os.makedirs(TEMPLATES_DIR, exist_ok=True)
+
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
+
+# Inicjalizacja bazy danych
 def init_db():
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
@@ -27,7 +28,8 @@ def init_db():
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         nazwa TEXT,
                         lokalizacja TEXT,
-                        projekt_link TEXT
+                        projekt_link TEXT,
+                        obrazek TEXT
                     )''')
     conn.commit()
     conn.close()
@@ -36,16 +38,28 @@ def init_db():
 def startup():
     init_db()
 
+# Strona główna
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+# Zapis projektu do bazy
 @app.post("/zapisz_projekt")
-def zapisz_projekt(nazwa: str = Form(...), lokalizacja: str = Form(...), projekt_link: str = Form(...)):
+def zapisz_projekt(
+    nazwa: str = Form(...),
+    lokalizacja: str = Form(...),
+    projekt_link: str = Form(...),
+    obrazek: str = Form(...)
+):
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO projekty (nazwa, lokalizacja, projekt_link) VALUES (?, ?, ?)", 
-                   (nazwa, lokalizacja, projekt_link))
+    cursor.execute("INSERT INTO projekty (nazwa, lokalizacja, projekt_link, obrazek) VALUES (?, ?, ?, ?)", 
+                   (nazwa, lokalizacja, projekt_link, obrazek))
     conn.commit()
     conn.close()
     return JSONResponse(content={"message": "Projekt zapisany pomyślnie!"})
 
+# Pobieranie projektów z bazy
 @app.get("/projekty")
 def pobierz_projekty():
     conn = sqlite3.connect(DB_FILE)
@@ -53,26 +67,7 @@ def pobierz_projekty():
     cursor.execute("SELECT * FROM projekty")
     projekty = cursor.fetchall()
     conn.close()
-    return [{"id": p[0], "nazwa": p[1], "lokalizacja": p[2], "projekt_link": p[3]} for p in projekty]
-
-# Pobieranie warunków zabudowy z MPZP (symulacja API)
-@app.get("/mpzp")
-def get_mpzp(lokalizacja: str = Query(..., title="Lokalizacja działki")):
-    return {
-        "lokalizacja": lokalizacja,
-        "maks_wysokosc": "9m",
-        "minimalna_odleglosc_od_granicy": "4m",
-        "dach": "skośny lub płaski"
-    }
-
-# Analiza nasłonecznienia
-@app.get("/analiza_slonca")
-def analiza_slonca(lokalizacja: str = Query(..., title="Lokalizacja działki")):
-    return {
-        "lokalizacja": lokalizacja,
-        "optymalny_kat": "30° względem południa",
-        "zalecana_orientacja": "Południowa"
-    }
+    return [{"id": p[0], "nazwa": p[1], "lokalizacja": p[2], "projekt_link": p[3], "obrazek": p[4]} for p in projekty]
 
 # Generowanie wniosku PDF
 @app.post("/generate_pdf")
@@ -83,24 +78,12 @@ def generate_pdf(dzialka: str = Form(...), urzad: str = Form(...)):
     pdf.cell(200, 10, txt="Wniosek o Warunki Zabudowy", ln=True, align='C')
     pdf.cell(200, 10, txt=f"Adres działki: {dzialka}", ln=True)
     pdf.cell(200, 10, txt=f"Urzad: {urzad}", ln=True)
-    
+
     filename = "wniosek.pdf"
     pdf.output(filename)
     return FileResponse(filename, media_type="application/pdf", filename=filename)
 
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
 # NOWY KOD – Endpoint główny zwracający stronę HTML
-@app.get("/", response_class=HTMLResponse)
-@app.post("/zapisz_projekt")
-def zapisz_projekt(
-    nazwa: str = Form(...),
-    lokalizacja: str = Form(...),
-    projekt_link: str = Form(...),
-    obrazek: str = Form(...)  # Dodajemy obsługę linku do obrazka
-):
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO projekty (nazwa, lokalizacja, projekt_link, obrazek) VALUES (?, ?, ?, ?)", 
-                   (nazwa, lokalizacja, projekt_link, obrazek))
-    conn.commit()
-    conn.close()
-    return JSONResponse(content={"message": "Projekt zapisany pomyślnie!"})
