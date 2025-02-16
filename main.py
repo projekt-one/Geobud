@@ -95,3 +95,16 @@ def read_root(request: Request):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
+    def update_db():
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    try:
+        cursor.execute("ALTER TABLE projekty ADD COLUMN obrazek TEXT")
+        conn.commit()
+        print("Kolumna 'obrazek' została dodana do bazy danych.")
+    except sqlite3.OperationalError:
+        print("Kolumna 'obrazek' już istnieje.")
+    finally:
+        conn.close()
+
+update_db()  # Uruchamiamy tylko raz!
