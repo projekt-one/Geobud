@@ -1,80 +1,67 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    margin: 20px;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+h1, h2 {
     text-align: center;
-    padding: 20px;
 }
 
-h1 {
-    color: #333;
-}
-
-h2 {
-    color: #555;
-}
-
-section {
-    background: white;
-    margin: 20px auto;
-    padding: 20px;
-    width: 80%;
-    max-width: 800px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.projekty {
+form {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.projekt {
-    background: #fff;
-    padding: 15px;
-    margin: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    width: 30%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+label {
+    margin-top: 10px;
 }
 
-.projekt img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+input {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
-    background-color: #007bff;
-    color: white;
+    margin-top: 15px;
     padding: 10px;
     border: none;
+    background-color: #007BFF;
+    color: white;
     cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-input, label {
-    display: block;
-    margin: 10px auto;
-    width: 80%;
-    padding: 5px;
-}
-
 #projekty-lista {
-    list-style: none;
-    padding: 0;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-#projekty-lista li {
-    background: #e9ecef;
+.projekt {
+    width: 250px;
+    background: white;
+    margin: 10px;
     padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.projekt img {
+    width: 100%;
+    border-radius: 8px;
 }
