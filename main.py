@@ -90,21 +90,17 @@ def generate_pdf(dzialka: str = Form(...), urzad: str = Form(...)):
 
 # NOWY KOD – Endpoint główny zwracający stronę HTML
 @app.get("/", response_class=HTMLResponse)
-def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-    def update_db():
+@app.post("/zapisz_projekt")
+def zapisz_projekt(
+    nazwa: str = Form(...),
+    lokalizacja: str = Form(...),
+    projekt_link: str = Form(...),
+    obrazek: str = Form(...)  # Dodajemy obsługę linku do obrazka
+):
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
-    try:
-        cursor.execute("ALTER TABLE projekty ADD COLUMN obrazek TEXT")
-        conn.commit()
-        print("Kolumna 'obrazek' została dodana do bazy danych.")
-    except sqlite3.OperationalError:
-        print("Kolumna 'obrazek' już istnieje.")
-    finally:
-        conn.close()
-
-update_db()  # Uruchamiamy tylko raz!
+    cursor.execute("INSERT INTO projekty (nazwa, lokalizacja, projekt_link, obrazek) VALUES (?, ?, ?, ?)", 
+                   (nazwa, lokalizacja, projekt_link, obrazek))
+    conn.commit()
+    conn.close()
+    return JSONResponse(content={"message": "Projekt zapisany pomyślnie!"})
