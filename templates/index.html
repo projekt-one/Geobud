@@ -1,54 +1,52 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Zarządzania Projektami</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+<div className="main-tiles" style={{ 
+  display: 'grid', 
+  gridTemplateColumns: 'repeat(2, 1fr)', 
+  gap: '20px', 
+  padding: '20px'
+}}>
+  <!-- Kafelek 1: Projekt domu -->
+  <div className="tile-house" style={{ 
+    background: 'linear-gradient(45deg, #6B8DD6 0%, #8E44AD 100%)',
+    borderRadius: '16px',
+    padding: '32px',
+    color: 'white',
+    textAlign: 'center'
+  }}>
+    <img src="house-icon.svg" alt="Dom" style={{ width: '80px' }} />
+    <h2>Stwórz projekt domu</h2>
+    <p>Zaprojektuj budynek, sprawdź nasłonecznienie i zgodność z przepisami</p>
+    <button style={{ 
+      background: '#FFC107', 
+      border: 'none', 
+      padding: '12px 24px',
+      borderRadius: '50px',
+      fontSize: '16px',
+      cursor: 'pointer'
+    }}>
+      Rozpocznij → 
+    </button>
+  </div>
 
-    <h1>System Zarządzania Projektami</h1>
-
-    <section id="wybierz-projekt">
-        <h2>Wybierz projekt</h2>
-        <div class="projekty">
-            <div class="projekt">
-                <img src="/static/images/projekt1.jpg" alt="Projekt 1">
-                <p>Projekt Domu 100m²</p>
-            </div>
-            <div class="projekt">
-                <img src="/static/images/projekt2.jpg" alt="Projekt 2">
-                <p>Projekt Domu 150m²</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="dodaj-projekt">
-        <h2>Dodaj Nowy Projekt</h2>
-        <form id="projekt-form">
-            <label>Nazwa projektu:</label>
-            <input type="text" name="nazwa" required>
-            
-            <label>Lokalizacja:</label>
-            <input type="text" name="lokalizacja" required>
-
-            <label>Link do projektu:</label>
-            <input type="url" name="projekt_link" required>
-
-            <label>Link do obrazka:</label>
-            <input type="url" name="obrazek" required>
-
-            <button type="submit">Zapisz</button>
-        </form>
-    </section>
-
-    <section id="lista-projektow">
-        <h2>Lista projektów</h2>
-        <div id="projekty-lista"></div>
-    </section>
-
-    <script src="/static/script.js"></script>
-
-</body>
-</html>
+  <!-- Kafelek 2: Projekt ogrodu -->
+  <div className="tile-garden" style={{ 
+    background: 'linear-gradient(45deg, #27AE60 0%, #2ECC71 100%)',
+    borderRadius: '16px',
+    padding: '32px',
+    color: 'white',
+    textAlign: 'center'
+  }}>
+    <img src="garden-icon.svg" alt="Ogród" style={{ width: '80px' }} />
+    <h2>Stwórz projekt ogrodu</h2>
+    <p>Zaplanuj roślinność, ścieżki i elementy małej architektury</p>
+    <button style={{ 
+      background: '#FFC107', 
+      border: 'none', 
+      padding: '12px 24px',
+      borderRadius: '50px',
+      fontSize: '16px',
+      cursor: 'pointer'
+    }}>
+      Rozpocznij → 
+    </button>
+  </div>
+</div>
