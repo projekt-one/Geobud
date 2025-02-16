@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", function () {
+    loadProjects();
+});
+
 document.getElementById("projekt-form").addEventListener("submit", function(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -10,7 +14,8 @@ document.getElementById("projekt-form").addEventListener("submit", function(even
     .then(data => {
         alert(data.message);
         loadProjects();
-    });
+    })
+    .catch(error => console.error("Błąd:", error));
 });
 
 function loadProjects() {
@@ -30,7 +35,6 @@ function loadProjects() {
             `;
             lista.appendChild(div);
         });
-    });
+    })
+    .catch(error => console.error("Błąd:", error));
 }
-
-loadProjects();
